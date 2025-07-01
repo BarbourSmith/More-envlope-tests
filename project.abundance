@@ -25,22 +25,42 @@
         {
             "atomType": "Code",
             "name": "Code",
-            "x": 0.3472222222222222,
-            "y": 0.5027932960893855,
+            "x": 0.3531746031746032,
+            "y": 0.44972067039106145,
             "uniqueID": "c670e96b-898b-45e0-a91f-0af2abdebfe7",
             "ioValues": [
                 {
                     "name": "thickness",
-                    "ioValue": 10
+                    "ioValue": 5
                 },
                 {
                     "name": "numBumps",
-                    "ioValue": 40
+                    "ioValue": 60
                 }
             ],
             "description": "Defines a Replicad code block.",
             "codeVersion": 1,
             "code": " \n      //Inputs:[thickness, numBumps]\n      //This defines the molecules inputs and creates variables with the same names which can be referenced in the code\n      \n      function bulbShape(t, height = 100, width = 80) {\n        // t from 0 to 1: tracing the full shape clockwise starting at bottom center\n      \n        const arcRadius = width / 2;\n        const arcCenterY = height - arcRadius;\n      \n        if (t < 0.25) {\n          // Left flat bottom to left arc start\n          const progress = t / 0.25;\n          return [-width / 2 + progress * width, 0];\n        } else if (t < 0.75) {\n          // Top arc (semicircle)\n          const angle = Math.PI * ((t - 0.25) / 0.5);\n          const x = arcRadius * Math.cos(angle);\n          const y = arcRadius * Math.sin(angle) + arcCenterY;\n          return [x, y];\n        } else {\n          // Right flat bottom to center\n          const progress = (t - 0.75) / 0.25;\n          return [width / 2 - progress * width, 0];\n        }\n      }\n\n\n\n       function shapeWithSine(t, numBumps = 50, amplitude = 6) {\n        const period = 1 / numBumps; // in parametric t-space\n      \n        // Base point\n        const [x, y] = bulbShape(t);\n      \n        // Compute tangent (by sampling nearby point)\n        const delta = 0.001;\n        const [x2, y2] = bulbShape((t + delta) % 1);\n        const dx = x2 - x;\n        const dy = y2 - y;\n      \n        // Get normal (rotate tangent 90Â° CCW)\n        const mag = Math.sqrt(dx * dx + dy * dy);\n        const nx = -dy / mag;\n        const ny = dx / mag;\n      \n        // Sine modulation\n        const sine = amplitude * Math.sin((2 * Math.PI * t) / period);\n      \n        // Apply normal offset\n        return [x + nx * sine, y + ny * sine];\n      }\n\n\n      // Step 3: Create the sinewave shape\n      const points = Math.max(200, 6*numBumps);\n      const sinewaveShape = replicad.drawParametricFunction(shapeWithSine, { pointsCount: points });\n  \n    \n      // Return the combined shape\n      let createdShape =  sinewaveShape.sketchOnPlane().extrude(thickness);\n\n      //This is the plane we are going to put our new shape on\n      const newPlane = new replicad.Plane().pivot(0, 'Y');\n      \n      //For our new geometry we need to define the tags, color, plane, etc\n      let shape2 = {\n          geometry: [createdShape], \n          tags: [\"aTag\"],\n          color: '#A3CE5B',\n          plane: newPlane,\n          bom: []\n      }\n      \n      //Then we can return our created shape in just the same way\n      return shape2\n      \n      \n          /**\n          To Use the Code Atom, enter your inputs to the input list a.e Inputs:[shape, height]\n          If your input is connected to another atom with a replicad geometry you can access its geometry by looking up its ID in your library. a.e library[Input1].geometry[0] \n          Use any replicad available methods to modify your geometry. Learn more about all of the available methods at \n          https://replicad.xyz/docs/introapp/UserGuide.html \n          Return a replicad object that includes geometry, color, tags and plane. \n      \n      \n          Example Code Atom:\n      \n            Inputs:[shape, x];\n      \n            let finalShape = library[shape].geometry[0].clone.translate[x,0,0]\n      \n            return {geometry: finalShape, color: library[shape].color, plane: library[shape].plane, tags: library[shape].tags }\n      \n            - See more examples at _______ \n      \n      \n          */\n      "
+        },
+        {
+            "atomType": "Constant",
+            "name": "Constant",
+            "x": 0.14153439153439154,
+            "y": 0.8044692737430167,
+            "uniqueID": "bd14512f-e3a1-471b-a6cc-505f34747b2b",
+            "ioValues": [],
+            "description": "Defines a mathematical constant.",
+            "value": 60
+        },
+        {
+            "atomType": "Constant",
+            "name": "Constant",
+            "x": 0.15608465608465608,
+            "y": 0.49720670391061456,
+            "uniqueID": "fbd41d4f-6119-4518-922b-714119a17dc9",
+            "ioValues": [],
+            "description": "Defines a mathematical constant.",
+            "value": 5
         }
     ],
     "allConnectors": [
@@ -50,6 +70,20 @@
             "ap2Primary": false,
             "ap1ID": "c670e96b-898b-45e0-a91f-0af2abdebfe7",
             "ap2ID": "999bf9dc-c3b9-4312-bb06-cf9b2423d599"
+        },
+        {
+            "ap1Name": "number",
+            "ap2Name": "numBumps",
+            "ap2Primary": false,
+            "ap1ID": "bd14512f-e3a1-471b-a6cc-505f34747b2b",
+            "ap2ID": "c670e96b-898b-45e0-a91f-0af2abdebfe7"
+        },
+        {
+            "ap1Name": "number",
+            "ap2Name": "thickness",
+            "ap2Primary": false,
+            "ap1ID": "fbd41d4f-6119-4518-922b-714119a17dc9",
+            "ap2ID": "c670e96b-898b-45e0-a91f-0af2abdebfe7"
         }
     ],
     "unitsKey": "MM",
