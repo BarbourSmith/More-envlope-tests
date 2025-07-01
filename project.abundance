@@ -25,8 +25,8 @@
         {
             "atomType": "Code",
             "name": "Code",
-            "x": 0.41468253968253965,
-            "y": 0.541899441340782,
+            "x": 0.41931216931216936,
+            "y": 0.4776536312849162,
             "uniqueID": "c670e96b-898b-45e0-a91f-0af2abdebfe7",
             "ioValues": [
                 {
@@ -54,6 +54,6 @@
     ],
     "unitsKey": "MM",
     "fileTypeVersion": 1,
-    "compiledBom": {},
+    "compiledBom": [],
     "filetypeVersion": 1
 }
