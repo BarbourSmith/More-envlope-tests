@@ -31,11 +31,11 @@
             "ioValues": [
                 {
                     "name": "thickness",
-                    "ioValue": 5
+                    "ioValue": 10
                 },
                 {
                     "name": "numBumps",
-                    "ioValue": 60
+                    "ioValue": 10
                 }
             ],
             "description": "Defines a Replicad code block.",
